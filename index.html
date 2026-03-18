@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✦ 月旋的动画摸鱼ing ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+  :root{--deep-blue:#1a2a6c;--mid-blue:#2e4a9e;--light-blue:#4a7fd4;--sky:#7ab3e8;--pale-sky:#b8d4f0;--cream:#f5f0e8;--gold:#e8c85a;--rose:#d4607a;--mint:#6ecfb0;--star-white:#fff9f0}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--deep-blue);color:var(--cream);font-family:'ZCOOL XiaoWei',serif;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(1px 1px at 10% 15%,rgba(255,249,240,.9) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 25% 40%,rgba(255,249,240,.7) 0%,transparent 100%),radial-gradient(2px 2px at 55% 25%,rgba(232,200,90,.9) 0%,transparent 100%),radial-gradient(1px 1px at 70% 10%,rgba(255,249,240,.7) 0%,transparent 100%),radial-gradient(2px 2px at 90% 70%,rgba(232,200,90,.7) 0%,transparent 100%),radial-gradient(1px 1px at 45% 80%,rgba(255,249,240,.5) 0%,transparent 100%);pointer-events:none;z-index:0}
+  .moon{position:fixed;border-radius:50%;background:transparent;border:2px solid rgba(255,249,240,.2);pointer-events:none;z-index:0;animation:floatMoon linear infinite}
+  .moon::after{content:'';position:absolute;top:-3px;left:4px;width:100%;height:100%;background:var(--deep-blue);border-radius:50%}
+  .moon:nth-child(1){width:30px;height:30px;top:12%;left:8%;animation-duration:20s;opacity:.5}
+  .moon:nth-child(2){width:18px;height:18px;top:30%;left:92%;animation-duration:25s;opacity:.4}
+  .moon:nth-child(3){width:24px;height:24px;top:60%;left:5%;animation-duration:30s;opacity:.35}
+  .moon:nth-child(4){width:14px;height:14px;top:80%;left:88%;animation-duration:18s;opacity:.5}
+  @keyframes floatMoon{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  nav{position:fixed;top:0;left:0;right:0;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;z-index:100;background:linear-gradient(180deg,rgba(12,20,60,.9) 0%,transparent 100%);backdrop-filter:blur(4px)}
+  .nav-logo{font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold);letter-spacing:.15em;text-decoration:none}
+  .nav-links{display:flex;gap:36px;list-style:none}
+  .nav-links a{color:var(--pale-sky);text-decoration:none;font-size:13px;letter-spacing:.2em;transition:color .25s;position:relative}
+  .nav-links a:hover{color:var(--gold)}
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 0;overflow:hidden;z-index:1}
+  .hero-frame{position:absolute;inset:72px 16px 16px;border:2px solid rgba(232,200,90,.35);pointer-events:none;z-index:2}
+  .hero-frame::before,.hero-frame::after{content:'';position:absolute;width:40px;height:40px;border-color:var(--gold);border-style:solid;opacity:.7}
+  .hero-frame::before{top:-2px;left:-2px;border-width:3px 0 0 3px}
+  .hero-frame::after{bottom:-2px;right:-2px;border-width:0 3px 3px 0}
+  .corner-ornament{position:absolute;font-size:28px;opacity:.5;color:var(--gold);z-index:3;pointer-events:none;animation:twinkle 3s ease-in-out infinite alternate}
+  .corner-ornament:nth-child(1){top:80px;left:24px}.corner-ornament:nth-child(2){top:80px;right:24px;transform:scaleX(-1)}
+  .corner-ornament:nth-child(3){bottom:24px;left:24px;transform:scaleY(-1)}.corner-ornament:nth-child(4){bottom:24px;right:24px;transform:scale(-1)}
+  @keyframes twinkle{from{opacity:.3;transform:scale(1)}to{opacity:.7;transform:scale(1.1)}}
+  .hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(74,127,212,.25) 0%,rgba(46,74,158,.1) 50%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:breathe 4s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.08);opacity:1}}
+  .hero-eyecatch{font-size:clamp(13px,1.8vw,16px);letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:18px;position:relative;z-index:5;animation:fadeDown 1s ease both}
+  .hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(38px,7vw,92px);font-weight:900;line-height:1.05;color:var(--star-white);text-shadow:0 0 40px rgba(74,127,212,.8),0 0 80px rgba(46,74,158,.5),2px 3px 0 rgba(26,42,108,.8);position:relative;z-index:5;animation:fadeDown 1s .15s ease both;letter-spacing:.04em}
+  .hero-title span{color:var(--gold);display:inline-block}
+  .hero-subtitle{font-family:'Ma Shan Zheng',cursive;font-size:clamp(16px,2.5vw,22px);color:var(--pale-sky);margin-top:18px;letter-spacing:.12em;position:relative;z-index:5;animation:fadeDown 1s .3s ease both;max-width:580px;line-height:1.8}
+  .hero-divider{margin:32px auto;display:flex;align-items:center;gap:14px;position:relative;z-index:5;animation:fadeDown 1s .45s ease both}
+  .hero-divider::before,.hero-divider::after{content:'';width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .hero-divider span{color:var(--gold);font-size:18px;display:flex;gap:8px}
+  .hero-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;border:1.5px solid var(--gold);color:var(--gold);font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.2em;text-decoration:none;position:relative;z-index:5;animation:fadeDown 1s .6s ease both;transition:all .35s ease;background:rgba(232,200,90,.06);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)}
+  .hero-cta:hover{background:rgba(232,200,90,.18);letter-spacing:.28em}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-22px)}to{opacity:1;transform:translateY(0)}}
+  .city-silhouette{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,rgba(12,20,60,.95) 0%,transparent 100%);z-index:4;pointer-events:none}
+  .city-svg{position:absolute;bottom:0;width:100%;opacity:.5}
+  .ribbon{position:absolute;height:2px;border-radius:1px;pointer-events:none;z-index:2;animation:ribbonDrift linear infinite;opacity:.5}
+  @keyframes ribbonDrift{0%{transform:translateX(-100%)}100%{transform:translateX(110vw)}}
+  .ribbon:nth-child(1){top:38%;width:260px;background:linear-gradient(90deg,transparent,var(--sky),var(--mint),transparent);animation-duration:12s}
+  .ribbon:nth-child(2){top:55%;width:180px;background:linear-gradient(90deg,transparent,var(--rose),transparent);animation-duration:17s;animation-delay:-6s}
+  .ribbon:nth-child(3){top:45%;width:300px;background:linear-gradient(90deg,transparent,var(--gold),var(--pale-sky),transparent);animation-duration:22s;animation-delay:-10s}
+  section{position:relative;z-index:1;padding:100px 60px}
+  .section-header{text-align:center;margin-bottom:70px}
+  .section-label{font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.75;margin-bottom:14px}
+  .section-title{font-family:'Cinzel Decorative',serif;font-size:clamp(28px,4vw,48px);color:var(--star-white);text-shadow:0 0 30px rgba(74,127,212,.5);line-height:1.2}
+  .section-title em{color:var(--gold);font-style:normal}
+  .section-ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:18px;color:var(--gold);font-size:14px;opacity:.6}
+  .section-ornament::before,.section-ornament::after{content:'';width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+  .section-ornament::after{background:linear-gradient(90deg,var(--gold),transparent)}
+
+  /* ── TIMELINE ── */
+  .timeline-section{position:relative;z-index:1;padding:0 0 90px;overflow:hidden;background:linear-gradient(180deg,rgba(12,20,60,.95) 0%,rgba(20,34,90,.85) 50%,rgba(12,20,60,.95) 100%)}
+  .timeline-header{text-align:center;padding:80px 0 0}
+
+  /* ── CAT FILTER ── */
+  .cat-filter-wrap{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;padding:32px 40px 44px;border-top:1px solid rgba(232,200,90,.12)}
+  .cat-btn{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 20px 12px;background:linear-gradient(135deg,rgba(46,74,158,.35),rgba(26,42,108,.6));border:1px solid rgba(74,127,212,.25);cursor:pointer;transition:all .28s ease;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);min-width:80px;position:relative}
+  .cat-btn:hover{border-color:rgba(232,200,90,.5);background:linear-gradient(135deg,rgba(74,127,212,.25),rgba(46,74,158,.7));transform:translateY(-3px)}
+  .cat-btn.active{border-color:var(--gold);background:linear-gradient(135deg,rgba(232,200,90,.12),rgba(46,74,158,.8));box-shadow:0 0 20px rgba(232,200,90,.2)}
+  .cat-btn.active::after{content:'';position:absolute;bottom:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:1px}
+  .cat-btn.active .cat-btn-icon{transform:scale(1.15);filter:drop-shadow(0 0 8px rgba(232,200,90,.6))}
+  .cat-btn-icon{font-size:28px;line-height:1;transition:transform .28s,filter .28s}
+  .cat-btn-label{font-family:'ZCOOL XiaoWei',serif;font-size:12px;letter-spacing:.15em;color:var(--pale-sky);transition:color .28s}
+  .cat-btn.active .cat-btn-label,.cat-btn:hover .cat-btn-label{color:var(--gold)}
+  .cat-btn-count{font-size:9px;color:var(--gold);opacity:0;transition:opacity .28s;min-height:12px;font-family:'Cinzel Decorative',serif}
+  .cat-btn.active .cat-btn-count{opacity:.7}
+  .cat-btn[data-cat="picturebook"].active{border-color:#d4a0e8}
+  .cat-btn[data-cat="illustration"].active{border-color:#7ab3e8}
+  .cat-btn[data-cat="handwriting"].active{border-color:#f0d080}
+  .cat-btn[data-cat="animation"].active{border-color:#e88a7a}
+  .cat-btn[data-cat="commercial"].active{border-color:#80d4b8}
+  .cat-btn[data-cat="design"].active{border-color:#a8c8a0}
+  .cat-btn[data-cat="other"].active{border-color:#9090b8}
+
+  /* ── TRACK ── */
+  .timeline-track-wrap{position:relative;width:100%;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(74,127,212,.4) transparent}
+  .timeline-track-wrap::-webkit-scrollbar{height:4px}
+  .timeline-track-wrap::-webkit-scrollbar-thumb{background:rgba(74,127,212,.35);border-radius:2px}
+  .timeline-inner{position:relative;display:flex;align-items:center;width:100%;min-width:900px;padding:260px 48px 220px;justify-content:space-evenly}
+  .timeline-line{position:absolute;top:50%;left:48px;right:48px;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(232,200,90,.25) 3%,rgba(232,200,90,.6) 12%,rgba(232,200,90,.6) 88%,rgba(232,200,90,.25) 97%,transparent 100%);transform:translateY(-50%)}
+  .timeline-line::after{content:'';position:absolute;top:-1px;left:0;width:120px;height:4px;background:linear-gradient(90deg,transparent,rgba(232,200,90,.9),transparent);animation:lineShimmer 4s ease-in-out infinite;border-radius:2px}
+  @keyframes lineShimmer{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:calc(100% - 120px);opacity:0}}
+  .tl-year-col{position:relative;display:flex;flex-direction:column;align-items:center;flex:1;cursor:default}
+  .tl-year-node{position:relative;z-index:4;width:80px;height:80px;border-radius:50%;border:2px solid rgba(232,200,90,.45);background:linear-gradient(135deg,rgba(46,74,158,.9),rgba(26,42,108,.95));display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:13px;color:var(--gold);letter-spacing:.04em;box-shadow:0 0 24px rgba(232,200,90,.15);transition:all .3s ease;flex-shrink:0}
+  .tl-year-col:hover .tl-year-node{border-color:var(--gold);box-shadow:0 0 36px rgba(232,200,90,.5);transform:scale(1.1)}
+  .tl-cards-above{position:absolute;bottom:calc(50% + 68px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:10px;align-items:center;width:200px}
+  .tl-cards-below{position:absolute;top:calc(50% + 68px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;align-items:center;width:200px}
+  .tl-cards-above::before{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:1px;height:52px;background:linear-gradient(180deg,transparent,rgba(232,200,90,.38))}
+  .tl-cards-below::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:1px;height:52px;background:linear-gradient(0deg,transparent,rgba(232,200,90,.38))}
+  .tl-card{width:192px;padding:12px 16px;background:linear-gradient(135deg,rgba(46,74,158,.5),rgba(26,42,108,.8));border:1px solid rgba(74,127,212,.28);cursor:pointer;transition:all .28s ease;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)}
+  .tl-card:hover{border-color:rgba(232,200,90,.5);background:linear-gradient(135deg,rgba(74,127,212,.3),rgba(46,74,158,.85));transform:translateY(-3px);box-shadow:0 10px 28px rgba(26,42,108,.5)}
+  .tl-card-cat{display:flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:5px;font-weight:600}
+  .tl-card-cat::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .tl-card-title{font-family:'Ma Shan Zheng',cursive;font-size:16px;color:var(--star-white);line-height:1.35}
+  .cat-picturebook  .tl-card-cat{color:#d4a0e8} .cat-picturebook  .tl-card-cat::before{background:#d4a0e8} .cat-picturebook  .tl-card{border-left:2px solid rgba(212,160,232,.5)}
+  .cat-illustration .tl-card-cat{color:#7ab3e8} .cat-illustration .tl-card-cat::before{background:#7ab3e8} .cat-illustration .tl-card{border-left:2px solid rgba(122,179,232,.5)}
+  .cat-handwriting  .tl-card-cat{color:#f0d080} .cat-handwriting  .tl-card-cat::before{background:#f0d080} .cat-handwriting  .tl-card{border-left:2px solid rgba(240,208,128,.5)}
+  .cat-animation    .tl-card-cat{color:#e88a7a} .cat-animation    .tl-card-cat::before{background:#e88a7a} .cat-animation    .tl-card{border-left:2px solid rgba(232,138,122,.5)}
+  .cat-commercial   .tl-card-cat{color:#80d4b8} .cat-commercial   .tl-card-cat::before{background:#80d4b8} .cat-commercial   .tl-card{border-left:2px solid rgba(128,212,184,.5)}
+  .cat-design       .tl-card-cat{color:#a8c8a0} .cat-design       .tl-card-cat::before{background:#a8c8a0} .cat-design       .tl-card{border-left:2px solid rgba(168,200,160,.5)}
+  .cat-other        .tl-card-cat{color:#9090b8} .cat-other        .tl-card-cat::before{background:#9090b8} .cat-other        .tl-card{border-left:2px solid rgba(144,144,184,.5)}
+  .timeline-legend{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:22px;padding:0 40px}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.15em;opacity:.65;transition:opacity .2s}
+  .legend-item:hover{opacity:1}
+  .legend-dot{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+
+  /* ── ABOUT ── */
+  .about-section{background:linear-gradient(180deg,rgba(26,42,108,0) 0%,rgba(26,42,108,.5) 30%,rgba(20,34,90,.7) 70%,rgba(26,42,108,0) 100%)}
+  .about-inner{max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .about-text p{font-size:16px;line-height:2;color:var(--pale-sky);margin-bottom:16px}
+  .about-text p strong{color:var(--gold)}
+  .about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .tag{padding:6px 16px;border:1px solid rgba(232,200,90,.35);color:var(--gold);font-size:12px;letter-spacing:.15em;background:rgba(232,200,90,.06);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+  .about-portrait{position:relative;display:flex;justify-content:center}
+  .portrait-frame{width:220px;height:220px;border-radius:50%;border:3px solid rgba(232,200,90,.4);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(circle,rgba(74,127,212,.3) 0%,rgba(26,42,108,.8) 100%);box-shadow:0 0 50px rgba(74,127,212,.3)}
+  .portrait-frame::before{content:'✦';position:absolute;font-size:90px;color:rgba(74,127,212,.2);animation:spinSlow 20s linear infinite}
+  .portrait-frame .emoji-avatar{font-size:72px;position:relative;z-index:2}
+  @keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+  /* ── CONTACT ── */
+  .contact-section{text-align:center;padding-bottom:120px}
+  .contact-box{max-width:560px;margin:0 auto;padding:50px 48px;border:1px solid rgba(74,127,212,.3);background:linear-gradient(135deg,rgba(46,74,158,.3),rgba(26,42,108,.6));position:relative;clip-path:polygon(20px 0%,100% 0%,calc(100% - 20px) 100%,0% 100%)}
+  .contact-text{font-family:'Ma Shan Zheng',cursive;font-size:17px;color:var(--pale-sky);line-height:2;margin-top:12px}
+  .contact-links{display:flex;justify-content:center;gap:24px;margin-top:32px;flex-wrap:wrap}
+  .contact-link{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:1px solid rgba(232,200,90,.4);color:var(--gold);text-decoration:none;font-size:13px;letter-spacing:.2em;transition:all .3s;background:rgba(232,200,90,.05);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)}
+  .contact-link:hover{background:rgba(232,200,90,.15)}
+  footer{position:relative;z-index:1;text-align:center;padding:32px;border-top:1px solid rgba(74,127,212,.15);font-size:12px;color:rgba(184,212,240,.4);letter-spacing:.2em}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── DETAIL EXT LINK ── */
+  .detail-ext-link{display:inline-flex;align-items:center;gap:12px;padding:14px 32px;background:linear-gradient(135deg,rgba(232,96,96,.15),rgba(200,60,60,.08));border:1px solid rgba(255,120,120,.4);color:#ff8080;text-decoration:none;font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.18em;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .3s ease;}
+  .detail-ext-link:hover{background:linear-gradient(135deg,rgba(232,96,96,.28),rgba(200,60,60,.15));border-color:rgba(255,120,120,.7);box-shadow:0 0 20px rgba(255,100,100,.2);letter-spacing:.22em;}
+  .detail-ext-icon{font-size:18px;}
+
+  /* ── DETAIL PAGE ── */
+  .detail-back{position:fixed;top:28px;left:36px;z-index:200;display:flex;align-items:center;gap:10px;padding:10px 24px 10px 18px;background:rgba(14,24,72,.9);border:1px solid rgba(232,200,90,.45);color:var(--gold);font-family:'ZCOOL XiaoWei',serif;font-size:14px;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(12px);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .28s ease;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+  .detail-back:hover{background:rgba(46,74,158,.95);box-shadow:0 0 20px rgba(232,200,90,.2)}
+  .detail-back-arrow{font-size:18px;line-height:1;transition:transform .28s}
+  .detail-back:hover .detail-back-arrow{transform:translateX(-5px)}
+
+  .detail-wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:120px 56px 100px}
+
+  /* header */
+  .detail-header{margin-bottom:48px}
+  .detail-meta{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .detail-year{font-family:'Cinzel Decorative',serif;font-size:11px;color:var(--pale-sky);opacity:.55;letter-spacing:.25em}
+  .detail-badge{padding:4px 18px;border:1px solid;font-size:10px;letter-spacing:.28em;text-transform:uppercase;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);background:rgba(255,255,255,.04)}
+  .detail-title{font-family:'Ma Shan Zheng',cursive;font-size:clamp(34px,5.5vw,64px);color:var(--star-white);line-height:1.1;text-shadow:0 0 50px rgba(74,127,212,.5),0 0 100px rgba(46,74,158,.3);margin-bottom:28px}
+  .detail-title-line{width:160px;height:2px;background:linear-gradient(90deg,var(--gold),rgba(232,200,90,.3),transparent)}
+
+  /* media */
+  .detail-media{margin:44px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
+  .detail-media iframe,.detail-media video{grid-column:1/-1;width:100%;aspect-ratio:16/9;border:none;border-radius:3px;box-shadow:0 8px 40px rgba(0,0,0,.4)}
+  .detail-media img{width:100%;object-fit:cover;border:1px solid rgba(74,127,212,.2);border-radius:3px;cursor:zoom-in;transition:transform .35s ease,box-shadow .35s ease;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+  .detail-media img:hover{transform:scale(1.025);box-shadow:0 8px 40px rgba(0,0,0,.5);border-color:rgba(232,200,90,.3)}
+  .detail-media-placeholder{grid-column:1/-1;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:1px dashed rgba(74,127,212,.2);color:rgba(184,212,240,.25);border-radius:3px;background:rgba(26,42,108,.15)}
+  .detail-media-placeholder span{font-size:44px;opacity:.2}
+  .detail-media-placeholder p{font-size:13px;letter-spacing:.2em}
+
+  /* info strip */
+  .detail-info-strip{display:flex;align-items:stretch;gap:0;margin-bottom:44px;background:linear-gradient(135deg,rgba(46,74,158,.25),rgba(26,42,108,.45));border:1px solid rgba(74,127,212,.2);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%)}
+  .detail-info-strip .detail-info-item{flex:1;padding:22px 28px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+  .detail-info-divider{width:1px;background:rgba(74,127,212,.2);margin:16px 0}
+  .detail-info-icon{font-size:18px;margin-bottom:2px}
+  .detail-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.6;margin-bottom:4px}
+  .detail-info-val{font-size:14px;color:var(--pale-sky);line-height:1.7;opacity:.85}
+
+  /* desc */
+  .detail-desc-block{margin-bottom:44px;padding:32px 36px;background:linear-gradient(135deg,rgba(26,42,108,.2),rgba(14,24,72,.4));border-left:3px solid rgba(232,200,90,.4);border-radius:0 3px 3px 0}
+  .detail-desc{font-size:16px;color:var(--pale-sky);line-height:2.2;opacity:.9;margin-top:14px}
+
+  /* process */
+  .detail-process-block{margin-bottom:44px}
+  .detail-process-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
+  .detail-process-grid img{width:100%;object-fit:cover;border:1px solid rgba(74,127,212,.15);border-radius:3px;cursor:zoom-in;transition:transform .3s}
+  .detail-process-grid img:hover{transform:scale(1.03)}
+
+  /* bottom nav */
+  .detail-nav{display:flex;justify-content:space-between;align-items:center;padding-top:40px;border-top:1px solid rgba(74,127,212,.15);margin-top:20px}
+  .detail-nav-btn{display:flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,rgba(46,74,158,.3),rgba(26,42,108,.6));border:1px solid rgba(74,127,212,.25);color:var(--pale-sky);font-family:'ZCOOL XiaoWei',serif;font-size:13px;letter-spacing:.15em;cursor:pointer;transition:all .28s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+  .detail-nav-btn:hover{border-color:rgba(232,200,90,.5);color:var(--gold);background:linear-gradient(135deg,rgba(74,127,212,.2),rgba(46,74,158,.7))}
+  .detail-nav-btn:disabled{opacity:.25;cursor:default}
+
+  @media(max-width:900px){
+    .detail-wrap{padding:90px 24px 80px}
+    .detail-info-strip{flex-direction:column;clip-path:none}
+    .detail-info-divider{width:100%;height:1px;margin:0 16px;width:auto}
+    .detail-desc-block{padding:22px 20px}
+    .detail-nav{flex-direction:column;gap:12px}
+    .detail-nav-btn{width:100%;justify-content:center}
+  }
+  .lbox{position:fixed;inset:0;background:rgba(4,8,32,.96);z-index:600;display:none;align-items:center;justify-content:center}
+  .lbox.open{display:flex}
+  .lbox img{max-width:92vw;max-height:88vh;object-fit:contain;border:1px solid rgba(232,200,90,.2)}
+  .lbox-close{position:absolute;top:20px;right:28px;color:var(--gold);font-size:22px;background:none;border:none;cursor:pointer}
+
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--deep-blue)}::-webkit-scrollbar-thumb{background:var(--mid-blue);border-radius:3px}
+  @media(max-width:900px){nav{padding:14px 24px}.nav-links{gap:20px}section{padding:70px 24px}.about-inner{grid-template-columns:1fr;gap:36px;text-align:center}.about-portrait{order:-1}.cat-filter-wrap{gap:10px}.cat-btn{min-width:64px;padding:12px 14px 10px}.cat-btn-icon{font-size:22px}.detail-info-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="moon"></div><div class="moon"></div><div class="moon"></div><div class="moon"></div>
+
+<!-- ══ MAIN PAGE ══ -->
+<div id="mainPage">
+<nav>
+  <a href="#" class="nav-logo">✦ 月旋的动画摸鱼ing</a>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#timeline">年表</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div><div class="hero-frame"></div>
+  <span class="corner-ornament">❧</span><span class="corner-ornament">❧</span>
+  <span class="corner-ornament">❧</span><span class="corner-ornament">❧</span>
+  <div class="ribbon"></div><div class="ribbon"></div><div class="ribbon"></div>
+  <p class="hero-eyecatch">— 月旋的动画摸鱼ing —</p>
+  <h1 class="hero-title">月旋<br><span>✦</span><br><span style="font-size:.5em;letter-spacing:.12em;font-family:'Ma Shan Zheng',cursive">动画摸鱼ing</span></h1>
+  <p class="hero-subtitle">插画 · 动画 · 视觉开发 · 概念设计<br>用画笔讲述跨越世界的故事</p>
+  <div class="hero-divider"><span>✦ ✦ ✦</span></div>
+  <a href="#timeline" class="hero-cta">探索作品 ✦</a>
+  <div class="city-silhouette">
+    <svg class="city-svg" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,80 L40,80 L40,40 L60,40 L60,20 L80,20 L80,40 L100,40 L100,60 L120,60 L120,30 L140,30 L140,10 L160,10 L160,30 L180,30 L180,60 L200,60 L200,45 L220,45 L220,25 L240,25 L240,55 L260,55 L260,70 L280,70 L280,35 L300,35 L300,15 L320,15 L320,35 L340,35 L340,70 L360,70 L360,50 L380,50 L380,65 L400,65 L400,40 L420,40 L420,20 L440,20 L440,40 L460,40 L460,60 L480,60 L480,45 L500,45 L500,30 L520,30 L520,50 L540,50 L540,70 L560,70 L560,55 L580,55 L580,35 L600,35 L600,55 L620,55 L620,75 L640,75 L640,50 L660,50 L660,25 L680,25 L680,45 L700,45 L700,65 L720,65 L720,50 L740,50 L740,30 L760,30 L760,55 L780,55 L780,70 L800,70 L800,45 L820,45 L820,20 L840,20 L840,40 L860,40 L860,60 L880,60 L880,40 L900,40 L900,60 L920,60 L920,45 L940,45 L940,30 L960,30 L960,50 L980,50 L980,65 L1000,65 L1000,40 L1020,40 L1020,55 L1040,55 L1040,35 L1060,35 L1060,15 L1080,15 L1080,35 L1100,35 L1100,60 L1120,60 L1120,45 L1140,45 L1140,25 L1160,25 L1160,45 L1180,45 L1180,65 L1200,65 L1200,45 L1220,45 L1220,60 L1240,60 L1240,40 L1260,40 L1260,20 L1280,20 L1280,40 L1300,40 L1300,55 L1320,55 L1320,70 L1340,70 L1340,50 L1360,50 L1360,65 L1380,65 L1380,80 L1440,80 L1440,120 L0,120 Z" fill="rgba(12,20,60,0.85)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="timeline">
+  <div class="timeline-header reveal">
+    <p class="section-label">Works Timeline</p>
+    <h2 class="section-title">作品 <em>年表</em></h2>
+    <div class="section-ornament">✦</div>
+    <p style="margin-top:14px;font-size:13px;color:var(--pale-sky);opacity:.65;letter-spacing:.1em">点击分类图标筛选 · 横向滑动浏览</p>
+  </div>
+
+  <div class="cat-filter-wrap">
+    <button class="cat-btn active" data-cat="all"         onclick="filterCat(this,'all')">        <div class="cat-btn-icon">✦</div><div class="cat-btn-label">全部</div>    <div class="cat-btn-count" id="cnt-all"></div></button>
+    <button class="cat-btn"        data-cat="animation"    onclick="filterCat(this,'animation')">  <div class="cat-btn-icon">🎬</div><div class="cat-btn-label">动画</div>    <div class="cat-btn-count" id="cnt-animation"></div></button>
+    <button class="cat-btn"        data-cat="picturebook"  onclick="filterCat(this,'picturebook')"><div class="cat-btn-icon">📖</div><div class="cat-btn-label">绘本</div>    <div class="cat-btn-count" id="cnt-picturebook"></div></button>
+    <button class="cat-btn"        data-cat="illustration" onclick="filterCat(this,'illustration')"><div class="cat-btn-icon">🎨</div><div class="cat-btn-label">插图/海报</div><div class="cat-btn-count" id="cnt-illustration"></div></button>
+    <button class="cat-btn"        data-cat="design"       onclick="filterCat(this,'design')">     <div class="cat-btn-icon">🎮</div><div class="cat-btn-label">设计</div>    <div class="cat-btn-count" id="cnt-design"></div></button>
+    <button class="cat-btn"        data-cat="handwriting"  onclick="filterCat(this,'handwriting')"><div class="cat-btn-icon">✏️</div><div class="cat-btn-label">手书</div>    <div class="cat-btn-count" id="cnt-handwriting"></div></button>
+    <button class="cat-btn"        data-cat="other"        onclick="filterCat(this,'other')">      <div class="cat-btn-icon">🔮</div><div class="cat-btn-label">其它</div>    <div class="cat-btn-count" id="cnt-other"></div></button>
+  </div>
+
+  <div class="timeline-track-wrap" id="tlWrap">
+    <div class="timeline-inner" id="tlInner">
+      <div class="timeline-line"></div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-picturebook" data-cat="picturebook" data-project="picturebook-chaoxi"><div class="tl-card-cat">绘本</div><div class="tl-card-title">潮汐锁定</div></div>
+        </div>
+        <div class="tl-year-node">2019</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-handwriting" data-cat="handwriting" data-project="handwriting-pokemon"><div class="tl-card-cat">手书</div><div class="tl-card-title">宝可梦</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-animation"  data-cat="animation"  data-project="commercial-dongfeng"><div class="tl-card-cat">商业动画</div><div class="tl-card-title">董奉与杏林</div></div>
+          <div class="tl-card cat-animation"  data-cat="animation"  data-project="animation-yuandonghua"><div class="tl-card-cat">原动画</div><div class="tl-card-title">练习</div></div>
+          <div class="tl-card cat-other"      data-cat="other"      data-project="other-kda"><div class="tl-card-cat">K大</div><div class="tl-card-title">练习</div></div>
+        </div>
+        <div class="tl-year-node">2020</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-other" data-cat="other" data-project="other-jianmo"><div class="tl-card-cat">建模</div><div class="tl-card-title">练习</div></div>
+          <div class="tl-card cat-other" data-cat="other" data-project="other-meishu"><div class="tl-card-cat">美术实践</div><div class="tl-card-title">练习</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-animation" data-cat="animation" data-project="animation-mian"><div class="tl-card-cat">个人动画</div><div class="tl-card-title">绵</div></div>
+          <div class="tl-card cat-other"     data-cat="other"     data-project="other-zbrush"><div class="tl-card-cat">数字雕刻</div><div class="tl-card-title">ZBrush</div></div>
+          <div class="tl-card cat-design"    data-cat="design"    data-project="design-unity"><div class="tl-card-cat">游戏美术</div><div class="tl-card-title">Unity</div></div>
+        </div>
+        <div class="tl-year-node">2021</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-illustration" data-cat="illustration" data-project="illustration-lianxi"><div class="tl-card-cat">插图</div><div class="tl-card-title">练习</div></div>
+          <div class="tl-card cat-animation"    data-cat="animation"    data-project="animation-depart"><div class="tl-card-cat">定格动画</div><div class="tl-card-title">DEPART</div></div>
+          <div class="tl-card cat-animation"   data-cat="animation"   data-project="commercial-niren"><div class="tl-card-cat">联合动画</div><div class="tl-card-title">泥人</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-picturebook" data-cat="picturebook" data-project="picturebook-yanghe"><div class="tl-card-cat">绘本</div><div class="tl-card-title">阳合起蜇</div></div>
+          <div class="tl-card cat-design"      data-cat="design"      data-project="design-shanhaijing"><div class="tl-card-cat">桌游设计</div><div class="tl-card-title">山海经</div></div>
+        </div>
+        <div class="tl-year-node">2022</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-design" data-cat="design" data-project="design-rumu"><div class="tl-card-cat">UI设计</div><div class="tl-card-title">入木三分</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-animation" data-cat="animation" data-project="animation-yi"><div class="tl-card-cat">个人毕设</div><div class="tl-card-title">一</div></div>
+        </div>
+        <div class="tl-year-node">2023</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-illustration" data-cat="illustration" data-project="illustration-haibao2023"><div class="tl-card-cat">海报</div><div class="tl-card-title">海报</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-animation"   data-cat="animation"   data-project="animation-yujin"><div class="tl-card-cat">个人动画</div><div class="tl-card-title">余烬</div></div>
+          <div class="tl-card cat-handwriting" data-cat="handwriting" data-project="handwriting-yefeng"><div class="tl-card-cat">手书</div><div class="tl-card-title">叶风与月旋</div></div>
+        </div>
+        <div class="tl-year-node">2024</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-animation" data-cat="animation" data-project="animation-mg"><div class="tl-card-cat">MG动画</div><div class="tl-card-title">科普</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-design"      data-cat="design"      data-project="design-jixiangwu"><div class="tl-card-cat">吉祥物设计</div><div class="tl-card-title">学院</div></div>
+          <div class="tl-card cat-picturebook" data-cat="picturebook" data-project="picturebook-yanke"><div class="tl-card-cat">绘本</div><div class="tl-card-title">眼科科普</div></div>
+          <div class="tl-card cat-design"      data-cat="design"      data-project="design-ip"><div class="tl-card-cat">IP形象设计</div><div class="tl-card-title">护眼大使</div></div>
+        </div>
+        <div class="tl-year-node">2025</div>
+        <div class="tl-cards-below">
+          <div class="tl-card cat-illustration" data-cat="illustration" data-project="illustration-wusheng"><div class="tl-card-cat">海报</div><div class="tl-card-title">无声的宣誓</div></div>
+          <div class="tl-card cat-illustration" data-cat="illustration" data-project="illustration-duanpian"><div class="tl-card-cat">海报</div><div class="tl-card-title">短片+咪咕</div></div>
+          <div class="tl-card cat-animation"    data-cat="animation"    data-project="commercial-bilibili"><div class="tl-card-cat">B站</div><div class="tl-card-title">能量加油站</div></div>
+        </div>
+      </div>
+
+      <div class="tl-year-col">
+        <div class="tl-cards-above">
+          <div class="tl-card cat-animation" data-cat="animation" data-project="animation-jiyi"><div class="tl-card-cat">AI动画</div><div class="tl-card-title">记忆回收站</div></div>
+        </div>
+        <div class="tl-year-node" style="border-color:var(--gold);box-shadow:0 0 28px rgba(232,200,90,.45)">2026</div>
+        <div class="tl-cards-below">
+          <div class="tl-card" style="border-left:2px solid rgba(232,200,90,.5);border-color:rgba(232,200,90,.3);background:linear-gradient(135deg,rgba(232,200,90,.08),rgba(26,42,108,.8));cursor:default">
+            <div class="tl-card-cat" style="color:var(--gold)">持续创作中</div>
+            <div class="tl-card-title">更多故事 ✦</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="timeline-legend reveal">
+    <div class="legend-item"><div class="legend-dot" style="background:#d4a0e8"></div>绘本</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7ab3e8"></div>插图/海报</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f0d080"></div>手书</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e88a7a"></div>动画</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a8c8a0"></div>设计</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9090b8"></div>其他</div>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="section-header reveal">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">关于 <em>我</em></h2>
+    <div class="section-ornament">✦</div>
+  </div>
+  <div class="about-inner">
+    <div class="about-text reveal">
+      <p>你好！我是一位热爱<strong>手绘插画与视觉叙事</strong>的创作者，专注于将奇幻故事与现代视觉语言融合，创作出充满情感温度的作品。</p>
+      <p>我的创作深受<strong>童话美学、日式动画</strong>与<strong>欧洲装饰艺术</strong>影响——相信每一帧画面都应该拥有自己的灵魂。</p>
+      <p>目前接受<strong>插图委托、动画分镜、视觉开发</strong>等项目合作。</p>
+      <div class="about-tags">
+        <span class="tag">插画</span><span class="tag">动画</span><span class="tag">概念设计</span>
+        <span class="tag">角色设计</span><span class="tag">视觉开发</span><span class="tag">分镜脚本</span>
+      </div>
+    </div>
+    <div class="about-portrait reveal">
+      <div class="portrait-frame"><span class="emoji-avatar">🎨</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="section-header reveal">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">联系 <em>我</em></h2>
+    <div class="section-ornament">✦</div>
+  </div>
+  <div class="contact-box reveal">
+    <p class="contact-text">如果你有有趣的项目想一起创作，<br>欢迎随时发来消息——<br><strong style="color:var(--gold)">每一个故事都值得被精心描绘。</strong></p>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#dcb4b9b0b0b39cb9a4bdb1acb0b9f2bfb3b1" class="contact-link">✉ 发送邮件</a>
+      <a href="#" class="contact-link">⬡ Behance</a>
+      <a href="#" class="contact-link">◈ Instagram</a>
+    </div>
+  </div>
+</section>
+<footer><p>✦ 月旋的动画摸鱼ing ✦ · 手绘每一帧，描绘每一个故事 · 2025</p></footer>
+</div><!-- /mainPage -->
+
+<!-- ══ DETAIL PAGE ══ -->
+<div id="detailPage" style="display:none;min-height:100vh;background:var(--deep-blue);position:relative;overflow:hidden;">
+
+  <!-- 星空背景 -->
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(1px 1px at 15% 20%,rgba(255,249,240,.7) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 40% 55%,rgba(255,249,240,.5) 0%,transparent 100%),radial-gradient(2px 2px at 70% 15%,rgba(232,200,90,.6) 0%,transparent 100%),radial-gradient(1px 1px at 85% 60%,rgba(255,249,240,.6) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 30% 80%,rgba(232,200,90,.4) 0%,transparent 100%);"></div>
+
+  <!-- 返回按钮 -->
+  <button class="detail-back" onclick="showMain()">
+    <span class="detail-back-arrow">←</span>
+    <span>返回年表</span>
+  </button>
+
+  <!-- 主内容 -->
+  <div class="detail-wrap">
+
+    <!-- ① 头部：年份 + 类别 + 标题 -->
+    <div class="detail-header">
+      <div class="detail-meta">
+        <span class="detail-year" id="dpYear"></span>
+        <span class="detail-badge" id="dpCat"></span>
+      </div>
+      <h1 class="detail-title" id="dpTitle"></h1>
+      <div class="detail-title-line"></div>
+    </div>
+
+    <!-- ② 媒体展示区（图片 / 视频） -->
+    <div class="detail-media" id="dpMedia">
+      <div class="detail-media-placeholder" id="dpPlaceholder">
+        <span>✦</span>
+        <p>图片 / 视频即将加入</p>
+      </div>
+    </div>
+
+    <!-- 外链按钮 -->
+    <div id="dpLinkWrap" style="display:none;margin-bottom:28px;">
+      <a id="dpLink" href="#" target="_blank" class="detail-ext-link">
+        <span class="detail-ext-icon">▶</span>
+        <span id="dpLinkText"></span>
+      </a>
+    </div>
+
+    <!-- ③ 项目信息栏 -->
+    <div class="detail-info-strip">
+      <div class="detail-info-item">
+        <div class="detail-info-icon">🗓</div>
+        <h4 class="detail-label">完成时间</h4>
+        <p class="detail-info-val" id="dpDate"></p>
+      </div>
+      <div class="detail-info-divider"></div>
+      <div class="detail-info-item">
+        <div class="detail-info-icon">🛠</div>
+        <h4 class="detail-label">工具 / 技法</h4>
+        <p class="detail-info-val" id="dpTools"></p>
+      </div>
+      <div class="detail-info-divider"></div>
+      <div class="detail-info-item">
+        <div class="detail-info-icon">✦</div>
+        <h4 class="detail-label">项目性质</h4>
+        <p class="detail-info-val" id="dpType"></p>
+      </div>
+    </div>
+
+    <!-- ④ 项目介绍 -->
+    <div class="detail-desc-block">
+      <h4 class="detail-label">✦ 项目介绍</h4>
+      <p class="detail-desc" id="dpDesc"></p>
+    </div>
+
+    <!-- ⑤ 创作过程（可选展开区） -->
+    <div class="detail-process-block" id="dpProcessBlock" style="display:none">
+      <h4 class="detail-label">✦ 创作过程</h4>
+      <div class="detail-process-grid" id="dpProcessGrid"></div>
+    </div>
+
+    <!-- ⑥ 底部导航：上一个 / 下一个 -->
+    <div class="detail-nav">
+      <button class="detail-nav-btn" id="dpPrev" onclick="navProject(-1)">
+        <span>←</span><span>上一个作品</span>
+      </button>
+      <button class="detail-nav-btn" id="dpNext" onclick="navProject(1)">
+        <span>下一个作品</span><span>→</span>
+      </button>
+    </div>
+
+  </div><!-- /detail-wrap -->
+</div>
+
+<div id="lbox" class="lbox">
+  <button class="lbox-close" id="lboxClose">✕</button>
+  <button class="lbox-prev" id="lboxPrev">&#8249;</button>
+  <div class="lbox-img-wrap">
+    <img id="lboxImg" src="" alt="">
+    <div class="lbox-counter" id="lboxCounter"></div>
+  </div>
+  <button class="lbox-next" id="lboxNext">&#8250;</button>
+</div>
+
+<script>
+var PROJECTS = {
+  'picturebook-chaoxi': {
+    title: '潮汐锁定',
+    year: '2019—2020',
+    cat: '绘本',
+    catColor: '#d4a0e8',
+    desc: '大一时的绘本设计作品，初次系统接触人物设计与场景设计。故事以 Pluto & Charon——太阳系中唯一一对互相潮汐锁定的星球——为原型，讲述了一段跨越星际孤独的追爱故事。两颗星球永远以同一面相对，是整个太阳系里独一无二的存在。',
+    tools: 'Photoshop',
+    date: '2019年春',
+    type: '课程作业',
+    images: [
+      'img_001.jpg','img_002.jpg','img_003.jpg','img_004.jpg',
+      'img_005.jpg','img_006.jpg','img_007.jpg','img_008.jpg',
+      'img_009.jpg','img_010.jpg','img_011.jpg','img_012.jpg',
+      'img_013.jpg','img_014.jpg'
+    ],
+    video: '',
+    process: [
+      'img_015.jpg','img_016.jpg',
+      'img_017.jpg','img_018.jpg','img_019.jpg'
+    ]
+  },
+  'handwriting-pokemon': {
+    title: '手书 · 宝可梦',
+    year: '2019—2020',
+    cat: '手书',
+    catColor: '#f0d080',
+    desc: '当时沉迷于做手书，于是和朋友一起创作了从小就喜欢的宝可梦系列。每一只宝可梦都有各自专属的场景与色彩氛围，用手书的方式重新演绎了这些陪伴童年的小精灵。',
+    link: 'https://www.bilibili.com/video/BV145411V7YG/',
+    linkText: '▶ 在 B站 观看完整视频',
+    tools: 'Photoshop / After Effects',
+    date: '2020年冬',
+    type: '个人作品',
+    images: [
+      'img_020.jpg',
+      'img_021.jpg',
+      'img_022.jpg',
+      'img_023.jpg',
+      'img_024.jpg',
+      'img_025.jpg',
+      'img_026.jpg',
+      'img_027.jpg',
+      'img_028.jpg',
+      'img_029.jpg'
+    ],
+    video: '',
+    process: []
+  },
+  'commercial-dongfeng': {
+    title: '董奉与杏林',
+    year: '2020—2021',
+    cat: '商业动画',
+    catColor: '#e88a7a',
+    desc: '上大学后跟着班主任和导师参加的第一个商业项目。主要负责场景设计、分镜设计与部分动画制作，包括大全景场景、室内场景、道具设计及分镜脚本。',
+    tools: 'Photoshop / CSP',
+    date: '2021年夏',
+    type: '商业委托',
+    images: [
+      'img_030.jpg',
+      'img_031.jpg',
+      'img_032.jpg'
+    ],
+    video: '',
+    process: []
+  },
+  'animation-yuandonghua': {
+    title: '原动画 · 练习',
+    year: '2020—2021',
+    cat: '动画',
+    catColor: '#e88a7a',
+    desc: '大二终于开始动手做动画啦～各种小练习，包括走路循环、跳跃、搬重物等基础动作的原动画练习。',
+    tools: 'Procreate / CSP',
+    date: '2021年夏',
+    type: '个人练习',
+    images: [],
+    video: '',
+    videos: [
+      'vid_001.mp4',
+      'vid_002.mp4',
+      'vid_003.mp4',
+      'vid_004.mp4',
+      'vid_005.mp4',
+      'vid_006.mp4'
+    ],
+    process: []
+  },
+  'other-kda': {
+    title: 'K大 · 练习',
+    year: '2020—2021',
+    cat: '其他',
+    catColor: '#9090b8',
+    desc: '跟着 Krenz 学了透视、色彩和构成，内容涵盖透视结构分析、光影色彩练习、场景构图等。构成课的练习和大作业都找不到了……哭死。',
+    tools: 'Photoshop / CSP',
+    date: '2020年秋',
+    type: '个人练习',
+    images: [
+      'img_033.jpg',
+      'img_034.jpg',
+      'img_035.jpg',
+      'img_036.jpg',
+      'img_037.jpg',
+      'img_038.jpg',
+      'img_039.jpg',
+      'img_040.jpg',
+      'img_041.jpg',
+      'img_042.jpg',
+      'img_043.jpg',
+      'img_044.jpg',
+      'img_045.jpg',
+      'img_046.jpg'
+    ],
+    video: '',
+    process: []
+  },
+  'other-jianmo':            {title:'建模 · 练习',           year:'2020—2021', cat:'建模',        catColor:'#9090b8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2021', type:'课程作业'},
+  'other-meishu':            {title:'美术实践 · 练习',       year:'2020—2021', cat:'美术实践',    catColor:'#9090b8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2021', type:'课程作业'},
+  'animation-mian':          {title:'个人动画 · 绵',         year:'2021—2022', cat:'个人动画',    catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2022', type:'个人作品'},
+  'other-zbrush':            {title:'数字雕刻 · ZBrush',    year:'2021—2022', cat:'数字雕刻',    catColor:'#9090b8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'ZBrush', date:'2022', type:'课程作业'},
+  'design-unity':            {title:'游戏美术 · Unity',     year:'2021—2022', cat:'游戏美术',    catColor:'#a8c8a0', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'Unity', date:'2022', type:'课程作业'},
+  'illustration-lianxi':     {title:'插图 · 练习',           year:'2021—2022', cat:'插图',        catColor:'#7ab3e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2022', type:'个人练习'},
+  'animation-depart':        {title:'定格动画 · DEPART',    year:'2021—2022', cat:'定格动画',    catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2022', type:'课程作业'},
+  'commercial-niren':        {title:'联合动画 · 泥人',       year:'2021—2022', cat:'联合动画',    catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2022', type:'联合项目'},
+  'picturebook-yanghe':      {title:'绘本 · 阳合起蜇',      year:'2022—2023', cat:'绘本',        catColor:'#d4a0e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2023', type:'课程作业'},
+  'design-shanhaijing':      {title:'桌游设计 · 山海经',    year:'2022—2023', cat:'桌游设计',    catColor:'#a8c8a0', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2023', type:'课程作业'},
+  'design-rumu':             {title:'UI设计 · 入木三分',    year:'2022—2023', cat:'UI设计',      catColor:'#a8c8a0', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2023', type:'课程作业'},
+  'animation-yi':            {title:'个人毕设 · 一',         year:'2023—2024', cat:'个人毕设',    catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2024', type:'毕业设计'},
+  'illustration-haibao2023': {title:'海报',                   year:'2023—2024', cat:'海报',        catColor:'#7ab3e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2024', type:'个人作品'},
+  'animation-yujin':         {title:'个人动画 · 余烬',       year:'2024—2025', cat:'个人动画',    catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2025', type:'个人作品'},
+  'handwriting-yefeng':      {title:'手书 · 叶风与月旋',    year:'2024—2025', cat:'手书',        catColor:'#f0d080', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2025', type:'个人作品'},
+  'animation-mg':            {title:'MG动画 · 科普',         year:'2024—2025', cat:'MG动画',      catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2025', type:'课程作业'},
+  'design-jixiangwu':        {title:'吉祥物设计 · 学院',    year:'2025—2026', cat:'吉祥物设计',  catColor:'#a8c8a0', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2025', type:'委托项目'},
+  'picturebook-yanke':       {title:'绘本 · 眼科科普',      year:'2025—2026', cat:'绘本',        catColor:'#d4a0e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2025', type:'委托项目'},
+  'design-ip':               {title:'IP形象设计 · 护眼大使',year:'2025—2026', cat:'IP形象设计',  catColor:'#a8c8a0', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2026', type:'委托项目'},
+  'illustration-wusheng':    {title:'海报 · 无声的宣誓',    year:'2025—2026', cat:'海报',        catColor:'#7ab3e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2026', type:'个人作品'},
+  'illustration-duanpian':   {title:'海报 · 短片+咪咕',     year:'2025—2026', cat:'海报',        catColor:'#7ab3e8', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2026', type:'商业项目'},
+  'commercial-bilibili':     {title:'B站 · 能量加油站',     year:'2025—2026', cat:'B站实习',     catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2026', type:'实习项目'},
+  'animation-jiyi':          {title:'AI动画 · 记忆回收站',  year:'2026—至今', cat:'AI动画',      catColor:'#e88a7a', images:[], video:'', process:[], desc:'作品介绍即将补充……', tools:'——', date:'2026', type:'个人作品'}
+};
+
+/* ── FILTER ── */
+function filterCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.tl-year-col').forEach(function(col) {
+    var cards = col.querySelectorAll('.tl-card[data-cat]');
+    var hasMatch = false;
+    cards.forEach(function(card) {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.style.display = '';
+        hasMatch = true;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    col.style.display = (cat === 'all' || hasMatch) ? '' : 'none';
+  });
+}
+
+window.addEventListener('load', function() {
+  ['all','animation','picturebook','illustration','design','handwriting','other'].forEach(function(cat) {
+    var el = document.getElementById('cnt-' + cat);
+    if (!el) return;
+    var n = cat === 'all'
+      ? document.querySelectorAll('.tl-card[data-project]').length
+      : document.querySelectorAll('.tl-card[data-cat="' + cat + '"]').length;
+    el.textContent = n + ' 个';
+  });
+});
+
+/* ── LIGHTBOX ── */
+var lboxImages = [];
+var lboxIndex  = 0;
+
+function openLbox(images, index) {
+  lboxImages = images;
+  lboxIndex  = index;
+  renderLbox();
+  document.getElementById('lbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLbox() {
+  var img     = document.getElementById('lboxImg');
+  var counter = document.getElementById('lboxCounter');
+  var prev    = document.getElementById('lboxPrev');
+  var next    = document.getElementById('lboxNext');
+
+  img.classList.add('fade');
+  setTimeout(function() {
+    img.src = lboxImages[lboxIndex];
+    img.classList.remove('fade');
+  }, 150);
+
+  counter.textContent = (lboxIndex + 1) + ' / ' + lboxImages.length;
+  prev.disabled = lboxIndex <= 0;
+  next.disabled = lboxIndex >= lboxImages.length - 1;
+}
+
+function closeLbox() {
+  document.getElementById('lbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lboxClose').addEventListener('click', closeLbox);
+document.getElementById('lboxPrev').addEventListener('click', function() {
+  if (lboxIndex > 0) { lboxIndex--; renderLbox(); }
+});
+document.getElementById('lboxNext').addEventListener('click', function() {
+  if (lboxIndex < lboxImages.length - 1) { lboxIndex++; renderLbox(); }
+});
+document.getElementById('lbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLbox();
+});
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft'  && lboxIndex > 0)                       { lboxIndex--; renderLbox(); }
+  if (e.key === 'ArrowRight' && lboxIndex < lboxImages.length - 1)   { lboxIndex++; renderLbox(); }
+  if (e.key === 'Escape') closeLbox();
+});
+
+/* ── ROUTER ── */
+var PROJECT_KEYS = Object.keys(PROJECTS);
+var currentProjectId = null;
+
+function showDetail(id) {
+  var p = PROJECTS[id];
+  if (!p) return;
+  currentProjectId = id;
+
+  // 填充基本信息
+  document.getElementById('dpYear').textContent  = p.year;
+  document.getElementById('dpTitle').textContent = p.title;
+
+  // 外链按钮
+  var linkWrap = document.getElementById('dpLinkWrap');
+  var linkEl   = document.getElementById('dpLink');
+  var linkText = document.getElementById('dpLinkText');
+  if (p.link) {
+    linkEl.href = p.link;
+    linkText.textContent = p.linkText || '▶ 查看完整视频';
+    linkWrap.style.display = 'block';
+  } else {
+    linkWrap.style.display = 'none';
+  }
+  document.getElementById('dpDesc').textContent  = p.desc || '作品介绍即将补充……';
+  document.getElementById('dpTools').textContent = p.tools || '——';
+  document.getElementById('dpDate').textContent  = p.date || '——';
+  document.getElementById('dpType').textContent  = p.type || '——';
+
+  var badge = document.getElementById('dpCat');
+  badge.textContent = p.cat;
+  badge.style.color = p.catColor;
+  badge.style.borderColor = p.catColor;
+
+  // 媒体区
+  var media = document.getElementById('dpMedia');
+  var ph    = document.getElementById('dpPlaceholder');
+  media.querySelectorAll('.dp-item').forEach(function(el){ el.remove(); });
+  var hasMedia = (p.images && p.images.length) || p.video || (p.videos && p.videos.length);
+  ph.style.display = hasMedia ? 'none' : 'flex';
+
+  if (p.video) {
+    var ifr = document.createElement('iframe');
+    ifr.src = p.video; ifr.allowFullscreen = true; ifr.className = 'dp-item';
+    ifr.style.cssText = 'grid-column:1/-1;width:100%;aspect-ratio:16/9;border:none;border-radius:3px;box-shadow:0 8px 40px rgba(0,0,0,.4)';
+    media.insertBefore(ifr, ph);
+  }
+  if (p.videos && p.videos.length) {
+    p.videos.forEach(function(src) {
+      var vid = document.createElement('video');
+      vid.src = src; vid.controls = true; vid.className = 'dp-item';
+      vid.style.cssText = 'width:100%;border-radius:3px;box-shadow:0 4px 20px rgba(0,0,0,.4);background:#000;';
+      media.insertBefore(vid, ph);
+    });
+    hasMedia = true;
+  }
+  if (p.images && p.images.length) {
+    var allImgs = p.images;
+    var imgIdx = 0;
+    p.images.forEach(function(src) {
+      var img = document.createElement('img');
+      img.src = src; img.alt = p.title; img.className = 'dp-item';
+      (function(idx){ img.onclick = function(){ openLbox(allImgs, idx); }; })(imgIdx);
+      imgIdx++;
+      media.insertBefore(img, ph);
+    });
+  }
+
+  // 创作过程图（可选）
+  var processBlock = document.getElementById('dpProcessBlock');
+  var processGrid  = document.getElementById('dpProcessGrid');
+  if (p.process && p.process.length) {
+    processGrid.innerHTML = '';
+    p.process.forEach(function(src) {
+      var img = document.createElement('img');
+      img.src = src; img.alt = '创作过程';
+      (function(idx){ img.onclick = function(){ openLbox(allImgs, idx); }; })(imgIdx);
+      imgIdx++;
+      processGrid.appendChild(img);
+    });
+    processBlock.style.display = 'block';
+  } else {
+    processBlock.style.display = 'none';
+  }
+
+  // 上一个 / 下一个
+  var idx  = PROJECT_KEYS.indexOf(id);
+  var prev = document.getElementById('dpPrev');
+  var next = document.getElementById('dpNext');
+  prev.disabled = idx <= 0;
+  next.disabled = idx >= PROJECT_KEYS.length - 1;
+  if (idx > 0)                        prev.querySelector('span:last-child').textContent = PROJECTS[PROJECT_KEYS[idx-1]].title;
+  if (idx < PROJECT_KEYS.length - 1)  next.querySelector('span:first-child').textContent = PROJECTS[PROJECT_KEYS[idx+1]].title;
+
+  // 切换页面
+  document.getElementById('mainPage').style.display   = 'none';
+  document.getElementById('detailPage').style.display = 'block';
+  window.scrollTo({top:0, behavior:'instant'});
+  history.pushState({id:id}, '', '#'+id);
+}
+
+function navProject(dir) {
+  var idx = PROJECT_KEYS.indexOf(currentProjectId);
+  var newIdx = idx + dir;
+  if (newIdx >= 0 && newIdx < PROJECT_KEYS.length) {
+    showDetail(PROJECT_KEYS[newIdx]);
+  }
+}
+
+function showMain() {
+  document.getElementById('detailPage').style.display = 'none';
+  document.getElementById('mainPage').style.display   = 'block';
+  setTimeout(function(){ var tl=document.getElementById('timeline'); if(tl) tl.scrollIntoView({behavior:'smooth',block:'start'}); }, 50);
+  history.pushState({}, '', window.location.pathname);
+}
+
+window.addEventListener('popstate', function(e){ if(e.state&&e.state.id) showDetail(e.state.id); else showMain(); });
+
+document.querySelectorAll('.tl-card[data-project]').forEach(function(card){
+  card.addEventListener('click', function(){ showDetail(this.dataset.project); });
+});
+
+/* ── REVEAL ── */
+var rEls = document.querySelectorAll('.reveal');
+var rObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){ if(e.isIntersecting) setTimeout(function(){ e.target.classList.add('visible'); },i*80); });
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+rEls.forEach(function(el){ rObs.observe(el); });
+
+/* ── MOONS ── */
+document.addEventListener('mousemove', function(e){
+  var cx=window.innerWidth/2, cy=window.innerHeight/2;
+  var dx=(e.clientX-cx)/cx, dy=(e.clientY-cy)/cy;
+  document.querySelectorAll('.moon').forEach(function(m,i){
+    m.style.transform='translate('+(i+1)*6*dx+'px,'+(i+1)*6*dy+'px)';
+  });
+  var g=document.querySelector('.hero-glow');
+  if(g) g.style.transform='translate(calc(-50% + '+dx*20+'px),calc(-50% + '+dy*20+'px))';
+});
+
+/* ── DRAG SCROLL ── */
+var tlW=document.getElementById('tlWrap');
+if(tlW){
+  var dn=false,dr=false,sx,sl;
+  tlW.addEventListener('mousedown',function(e){dn=true;dr=false;sx=e.pageX-tlW.offsetLeft;sl=tlW.scrollLeft;tlW.style.cursor='grabbing';});
+  tlW.addEventListener('mouseleave',function(){dn=false;tlW.style.cursor='';});
+  tlW.addEventListener('mouseup',function(){dn=false;tlW.style.cursor='';});
+  tlW.addEventListener('mousemove',function(e){if(!dn)return;if(Math.abs(e.pageX-tlW.offsetLeft-sx)>5)dr=true;if(dr){e.preventDefault();tlW.scrollLeft=sl-(e.pageX-tlW.offsetLeft-sx);}});
+  tlW.addEventListener('click',function(e){if(dr){e.stopPropagation();dr=false;}},true);
+}
+
+/* ── NAV ── */
+var ns=document.querySelectorAll('section[id]');
+var nl=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',function(){
+  var c='';
+  ns.forEach(function(s){if(window.scrollY>=s.offsetTop-200)c=s.id;});
+  nl.forEach(function(a){a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':'';});
+});
+</script>
+</body>
+</html>
